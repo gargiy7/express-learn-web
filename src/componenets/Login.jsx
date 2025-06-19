@@ -1,9 +1,14 @@
 import axios from "axios";
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addUser } from "../utils/userSlice";
+import { useNavigate } from "react-router";
 
 const Login = () => {
   const [email, setEmail] = useState("umpire@test.com");
   const [password, setPassword] = useState("Umpire@1234");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleLogin = async () => {
     try {
@@ -13,6 +18,8 @@ const Login = () => {
         { withCredentials: true }
       );
       console.log(response);
+      dispatch(addUser(response.data.user));
+      navigate("/userdashboard");
     } catch (error) {
       console.error(error);
     }
@@ -85,7 +92,7 @@ const Login = () => {
               }}
               required
               placeholder="Password"
-              minlength="8"
+              minLength="8"
               pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
               title="Must be more than 8 characters, including number, lowercase letter, uppercase letter"
             />
@@ -100,7 +107,7 @@ const Login = () => {
           {/* IMAGE PATH */}
           <div className="card-actions justify-end my-3">
             <button className="btn btn-primary" onClick={handleLogin}>
-              Buy Now
+              Log In
             </button>
           </div>
         </div>
