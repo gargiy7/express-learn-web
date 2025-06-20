@@ -1,54 +1,38 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import ProductsCard from "./ProductsCard";
+import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { addProduct } from "../utils/productSlice";
+import CreateProduct from "./CreateProduct";
+
+const todos = ["Learn React", "Build a project", "Deploy"];
 
 const UserDashboard = () => {
+  const userData = useSelector((store) => store.user);
+
+  const dispatch = useDispatch();
+
   return (
     <>
       <div>
-        {/* Open the modal using document.getElementById('ID').showModal() method */}
         <div className="flex justify-center mt-3">
+          <button className="btn btn-neutral btn-wide btn-lg mr-4">Get Products</button>
+          {/* Open the modal using document.getElementById('ID').showModal() method */}
           <button
-            className="btn btn-neutral btn-block btn-xl"
+            className="btn btn-neutral btn-wide btn-lg"
             onClick={() => document.getElementById("my_modal_2").showModal()}
           >
             Create a New Product.
           </button>
-
           <dialog id="my_modal_2" className="modal">
-            <div className="modal-box flex flex-col items-center justify-center gap-3">
-              <h3 className="font-bold text-lg text-center">Your Product!</h3>
-              {/* <p className="pb-1 text-center">
-                Press ESC key or click outside to close
-              </p> */}
-
-              <input
-                type="text"
-                placeholder="Title"
-                className="input input-success w-full max-w-xs"
-              />
-              <input
-                type="text"
-                placeholder="Price"
-                className="input input-success w-full max-w-xs"
-              />
-              <input
-                type="text"
-                placeholder="Category"
-                className="input input-success w-full max-w-xs"
-              />
-
-              <label className="input">
-                Path
-                <input type="text" className="grow" placeholder="src/app/" />
-                <span className="badge badge-neutral badge-xs">Optional</span>
-              </label>
-              <button className="btn btn-active btn-warning">Submit</button>
-            </div>
-
+            <CreateProduct />
             <form method="dialog" className="modal-backdrop">
               <button>close</button>
             </form>
           </dialog>
         </div>
+
+        {/* Rendering the product cards */}
       </div>
     </>
   );

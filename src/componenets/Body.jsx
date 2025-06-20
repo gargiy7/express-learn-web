@@ -19,6 +19,7 @@ const Body = () => {
         "http://localhost:5000/api/users/profile/view",
         { withCredentials: true }
       );
+      console.log(response);
       dispatch(addUser(response.data));
       navigate("/userdashboard");
     } catch (error) {
