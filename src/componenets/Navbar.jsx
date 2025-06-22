@@ -69,7 +69,9 @@ const Navbar = () => {
                   className="card card-compact dropdown-content bg-base-100 z-1 mt-3 w-52 shadow"
                 >
                   <div className="card-body">
-                    <span className="text-lg font-bold">8 Items</span>
+                    <span className="text-lg font-bold">
+                      {user ? user?.products.length : 106}
+                    </span>
                     <span className="text-info">Subtotal: $999</span>
                     <div className="card-actions">
                       <button className="btn btn-primary btn-block">
@@ -104,7 +106,7 @@ const Navbar = () => {
                     </Link>
                   </li>
                   <li>
-                    <a>Settings</a>
+                    <Link to="/productcards">productsCards</Link>
                   </li>
                   <li>
                     <a onClick={handleLogout}>Logout</a>

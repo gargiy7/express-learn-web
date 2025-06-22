@@ -1,25 +1,50 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import CardRender from "./CardRender";
+import { useSelector } from "react-redux";
 
 const ProductsCard = () => {
+  const userData = useSelector((store) => store.user);
+  const userId = userData ? userData._id : null;
+  console.log("Check userId id this====", userId);
+  const [prod, setProd] = useState([]);
+
+  const fetchproducts = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:5000/api/products/user/" + userId,
+        { withCredentials: true }
+      );
+      console.log(response);
+      setProd(response.data.userProducts);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    // Only fetch products if userId is available
+    if (userId) {
+      fetchproducts();
+    }
+  }, [userId]); // Add userId to the dependency array
+
+  // For handling deleted product in child component i.e CardRenderer
+  const handleDelete = (deletedId) => {
+    setProd((prevProd) => prevProd.filter((item) => item._id !== deletedId));
+  };
+
+ 
+
+
   return (
     <>
-      <div>
-        <div className="card bg-base-300 w-60 mt-2 shadow-sm">
-          <figure className="px-5 pt-5">
-            <img
-              src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
-              alt="Shoes"
-              className="rounded-xl"
-            />
-          </figure>
-          <div className="card-body items-center text-center">
-            <h2 className="card-title">Card Title</h2>
-            <p>A card</p>
-            <div className="card-actions">
-              <button className="btn btn-primary">Buy Now</button>
-            </div>
-          </div>
-        </div>
+      <div className="flex justify-center ">
+        {Array.isArray(prod) &&
+          // prod.map((val) => <p key={val._id}>{val.title}</p>)}
+          prod.map((val) => (
+            <CardRender key={val._id} {...val} onDelete={handleDelete}  />
+          ))}
       </div>
     </>
   );

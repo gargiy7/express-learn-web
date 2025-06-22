@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import ProductsCard from "./ProductsCard";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { addProduct } from "../utils/productSlice";
 import CreateProduct from "./CreateProduct";
 
 const todos = ["Learn React", "Build a project", "Deploy"];

@@ -7,6 +7,7 @@ import { Provider } from "react-redux";
 import appStore from "./utils/appStore";
 import BodyDefault from "./componenets/BodyDefault";
 import UserDashboard from "./componenets/UserDashboard";
+import ProductsCard from "./componenets/ProductsCard";
 
 const AppLayout = () => {
   return (
@@ -20,6 +21,7 @@ const AppLayout = () => {
                 <Route path="login" element={<Login />} />
                 <Route path="profile" element={<Profile />} />
                 <Route path="userdashboard" element={<UserDashboard />} />
+                <Route path="productcards" element={<ProductsCard />} />
               </Route>
             </Routes>
           </BrowserRouter>

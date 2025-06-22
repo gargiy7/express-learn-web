@@ -5,8 +5,12 @@ import { addUser } from "../utils/userSlice";
 import { useNavigate } from "react-router";
 
 const Login = () => {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("umpire@test.com");
   const [password, setPassword] = useState("Umpire@1234");
+  const [image, setImage] = useState("");
+  const [isLogin, setIsLogin] = useState(true);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -25,6 +29,21 @@ const Login = () => {
     }
   };
 
+  const handleSignin = async () => {
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/users/signup",
+        { name, email, password, image },
+        { withCredentials: true }
+      );
+      console.log(response);
+      dispatch(addUser(response.data.user));
+      navigate("/userdashboard");
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div className="flex justify-center py-10">
       <div className="card bg-base-100 image-full w-96 shadow-sm">
@@ -35,10 +54,55 @@ const Login = () => {
           />
         </figure>
         <div className="card-body">
-          <h2 className="card-title">LOG IN</h2>
+          <h2 className="card-title">{isLogin ? " Log In" : "SignUp"}</h2>
+
+          {/* UserNAME */}
+          {!isLogin && (
+            <>
+              {" "}
+              <label className="input validator">
+                <svg
+                  className="h-[1em] opacity-50"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                >
+                  <g
+                    strokeLinejoin="round"
+                    strokeLinecap="round"
+                    strokeWidth="2.5"
+                    fill="none"
+                    stroke="currentColor"
+                  >
+                    <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                  </g>
+                </svg>
+                <input
+                  type="text"
+                  value={name}
+                  onChange={(e) => {
+                    setName(e.target.value);
+                  }}
+                  required
+                  placeholder="Username"
+                  pattern="[A-Za-z][A-Za-z0-9\-]*"
+                  minlength="3"
+                  maxlength="30"
+                  title="Only letters, numbers or dash"
+                />
+              </label>
+              <p className="validator-hint">
+                Must be 3 to 30 characters
+                <br />
+                containing only letters, numbers or dash
+              </p>
+            </>
+          )}
 
           {/* EMAIL */}
-          <label className="input validator my-2">
+          <label
+            className={!isLogin ? "input validator -mt-9" : "input validator "}
+          >
             <svg
               className="h-[1em] opacity-50"
               xmlns="http://www.w3.org/2000/svg"
@@ -66,6 +130,7 @@ const Login = () => {
             />
           </label>
           <div className="validator-hint hidden">Enter valid email address</div>
+
           {/* PASSWORD */}
           <label className="input validator my-4">
             <svg
@@ -104,10 +169,39 @@ const Login = () => {
             At least one lowercase letter <br />
             At least one uppercase letter
           </p>
+
           {/* IMAGE PATH */}
+          {!isLogin && (
+            <label className="input">
+              Path
+              <input
+                type="text"
+                value={image}
+                onChange={(e) => {
+                  setImage(e.target.value);
+                }}
+                className="grow"
+                placeholder="src/app/"
+              />
+              <span className="badge badge-neutral badge-xs">Optional</span>
+            </label>
+          )}
+
+          {/* login / sign up toglle function  */}
+          <span
+            className="cursor-pointer"
+            onClick={() => {
+              setIsLogin(!isLogin);
+            }}
+          >
+            {isLogin ? "SignUp Now !" : "Already a User? Log In"}
+          </span>
           <div className="card-actions justify-end my-3">
-            <button className="btn btn-primary" onClick={handleLogin}>
-              Log In
+            <button
+              className="btn btn-primary"
+              onClick={!isLogin ? handleSignin : handleLogin}
+            >
+             {isLogin ? " Log In" : "SignUp"}
             </button>
           </div>
         </div>

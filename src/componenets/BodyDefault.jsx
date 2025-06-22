@@ -117,7 +117,7 @@ const BodyDefault = () => {
           Register / Log In
         </button>
         <dialog id="my_modal_2" className="modal">
-          <div className="modal-box">
+          <div className="modal-box glass">
             <Login />
           </div>
           <form method="dialog" className="modal-backdrop">

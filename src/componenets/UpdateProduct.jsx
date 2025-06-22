@@ -3,29 +3,30 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addUserProduct } from "../utils/userSlice";
 
-const CreateProduct = () => {
+const UpdateProduct = ({ productId, initialData, onClose }) => {
   const userData = useSelector((store) => store.user);
   const dispatch = useDispatch();
-  const [title, setTitle] = useState("");
-  const [category, setCategory] = useState("");
-  const [price, setPrice] = useState();
-  const [image, setImage] = useState("");
+  const [title, setTitle] = useState(initialData?.title || "");
+  const [category, setCategory] = useState(initialData?.category || "");
+  const [price, setPrice] = useState(initialData?.price || "");
+  const [image, setImage] = useState(initialData?.image || "");
 
   const submitHandler = async () => {
     try {
-      const response = await axios.post(
-        "http://localhost:5000/api/products/",
-        { title, category, price, image, creator: userData?._id },
+      const response = await axios.patch(
+        `http://localhost:5000/api/products/${productId}`,
+        { title, category, price, image },
         { withCredentials: true }
       );
-      console.log(response);
-      dispatch(addUserProduct(response.data.product._id));
-      document.getElementById("my_modal_2").close();
-      // Optional: reset form
-      // setTitle("");
-      // setCategory("");
-      // setPrice("");
-      // setImage("");
+      const updated = response.data.product;
+      console.log(updated);
+
+      if (onClose) onClose(); // close modal
+
+      setTitle("");
+      setCategory("");
+      setPrice("");
+      setImage("");
     } catch (error) {
       console.error(error);
     }
@@ -34,7 +35,7 @@ const CreateProduct = () => {
   return (
     <>
       <div className="modal-box flex flex-col items-center justify-center gap-3">
-        <h3 className="font-bold text-xl text-center">Your Product!</h3>
+        <h3 className="font-bold text-xl text-center">Update Your Product!</h3>
 
         <input
           type="text"
@@ -78,11 +79,11 @@ const CreateProduct = () => {
           <span className="badge badge-neutral badge-xs">Optional</span>
         </label>
         <button className="btn btn-active btn-warning" onClick={submitHandler}>
-          Submit
+          Update Product
         </button>
       </div>
     </>
   );
 };
 
-export default CreateProduct;
+export default UpdateProduct;
