@@ -2,10 +2,12 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addUserProduct } from "../utils/userSlice";
+import { useNavigate } from "react-router";
 
-const UpdateProduct = ({ productId, initialData, onClose }) => {
+const UpdateProduct = ({ productId, initialData, onClose, onUpdate }) => {
   const userData = useSelector((store) => store.user);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [title, setTitle] = useState(initialData?.title || "");
   const [category, setCategory] = useState(initialData?.category || "");
   const [price, setPrice] = useState(initialData?.price || "");
@@ -14,19 +16,21 @@ const UpdateProduct = ({ productId, initialData, onClose }) => {
   const submitHandler = async () => {
     try {
       const response = await axios.patch(
-        `http://localhost:5000/api/products/${productId}`,
+        `${import.meta.env.VITE_BACKEND_API_URL}/products/${productId}`,
         { title, category, price, image },
         { withCredentials: true }
       );
-      const updated = response.data.product;
+      console.log(response);
+      const updated = response.data.updatedProduct;
       console.log(updated);
 
+      if (onUpdate) onUpdate(updated); // ✅ real-time update
       if (onClose) onClose(); // close modal
-
       setTitle("");
       setCategory("");
       setPrice("");
       setImage("");
+      //navigate("/userdashboard");
     } catch (error) {
       console.error(error);
     }

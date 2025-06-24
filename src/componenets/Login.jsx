@@ -17,11 +17,11 @@ const Login = () => {
   const handleLogin = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/users/login",
+        `${import.meta.env.VITE_BACKEND_API_URL}/users/login`,
         { email, password },
         { withCredentials: true }
       );
-      // console.log(response);
+      //console.log(email, password, response);
       dispatch(addUser(response.data.user));
       navigate("/userdashboard");
     } catch (error) {
@@ -32,7 +32,7 @@ const Login = () => {
   const handleSignin = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/users/signup",
+        import.meta.env.VITE_BACKEND_API_URL + "/users/signup",
         { name, email, password, image },
         { withCredentials: true }
       );
@@ -201,7 +201,7 @@ const Login = () => {
               className="btn btn-primary"
               onClick={!isLogin ? handleSignin : handleLogin}
             >
-             {isLogin ? " Log In" : "SignUp"}
+              {isLogin ? " Log In" : "SignUp"}
             </button>
           </div>
         </div>

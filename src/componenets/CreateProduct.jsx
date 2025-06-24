@@ -14,7 +14,7 @@ const CreateProduct = () => {
   const submitHandler = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/products/",
+        import.meta.env.VITE_BACKEND_API_URL+"/products/",
         { title, category, price, image, creator: userData?._id },
         { withCredentials: true }
       );
@@ -22,9 +22,9 @@ const CreateProduct = () => {
       dispatch(addUserProduct(response.data.product._id));
       document.getElementById("my_modal_2").close();
       // Optional: reset form
-      // setTitle("");
-      // setCategory("");
-      // setPrice("");
+       setTitle("");
+       setCategory("");
+       setPrice("");
       // setImage("");
     } catch (error) {
       console.error(error);

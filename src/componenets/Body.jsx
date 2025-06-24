@@ -16,7 +16,7 @@ const Body = () => {
     if (userData) return;
     try {
       const response = await axios.get(
-        "http://localhost:5000/api/users/profile/view",
+        import.meta.env.VITE_BACKEND_API_URL + "/users/profile/view",
         { withCredentials: true }
       );
       console.log(response);

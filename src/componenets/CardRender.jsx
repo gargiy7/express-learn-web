@@ -1,16 +1,24 @@
 import axios from "axios";
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { removeUserProduct } from "../utils/userSlice";
 import UpdateProduct from "./UpdateProduct";
 
-const CardRender = ({ _id, title, category, price, image, onDelete }) => {
+const CardRender = ({
+  _id,
+  title,
+  category,
+  price,
+  image,
+  onDelete,
+  onUpdate,
+}) => {
   const dispatch = useDispatch();
 
   const deleteHandler = async () => {
     try {
       const response = await axios.delete(
-        `http://localhost:5000/api/products/${_id}`,
+        `${import.meta.env.VITE_BACKEND_API_URL}/products/${_id}`,
         { withCredentials: true }
       );
       console.log(response);
@@ -20,6 +28,8 @@ const CardRender = ({ _id, title, category, price, image, onDelete }) => {
       console.error(error);
     }
   };
+  // to update the data on cards
+
   return (
     <div className="mt-4 mx-3">
       <div className="card bg-base-300 w-64 h-80 shadow-sm">
@@ -55,7 +65,7 @@ const CardRender = ({ _id, title, category, price, image, onDelete }) => {
                 productId={_id}
                 initialData={{ title, category, price, image }}
                 onClose={() => document.getElementById(`modal-${_id}`).close()}
-                onUpdate={(updatedProduct) => onUpdate(updatedProduct)}
+                onUpdate={onUpdate}
               />
               <form method="dialog" className="modal-backdrop">
                 <button>close</button>
