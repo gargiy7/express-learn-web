@@ -1,12 +1,25 @@
-# React + Vite
+# React + Vite + MERN
+Tech Stack: React (Vite), Redux, Tailwind CSS, DaisyUI, Node.js, Express.js, MongoDB, Mongoose, Axios,SWR, React Router v7, Render, Firebase
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Description:
+Built a full-stack product management platform with user authentication and role-based product creation. Implemented secure login using HTTP-only cookies, dynamic dashboard rendering, protected routes, and modular backend with RESTful APIs. Handled form validations, modal components, and state management with Redux.
 
-Currently, two official plugins are available:
+Key Features:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+User authentication and session persistence (JWT + cookies)
 
-## Expanding the ESLint configuration
+Product CRUD with real-time UI updates
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Responsive design with Tailwind CSS & DaisyUI
+
+Integrated secure .env handling and production-ready folder structure
+
+Deployment-ready with environment-specific config support
+
+FRONTEND:
+🔗 Live Demo: https://express-web-d8e4e.web.app
+💻 GitHub:    https://github.com/gargiy7/express-learn-web
+
+BACKEND:
+🔗 Live Demo: https://express-learn-ad0m.onrender.com
+💻 GitHub:    https://github.com/gargiy7/express-learn
