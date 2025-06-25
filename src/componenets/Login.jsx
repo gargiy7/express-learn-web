@@ -6,8 +6,8 @@ import { useNavigate } from "react-router";
 
 const Login = () => {
   const [name, setName] = useState("");
-  const [email, setEmail] = useState("umpire@test.com");
-  const [password, setPassword] = useState("Umpire@1234");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [image, setImage] = useState("");
   const [isLogin, setIsLogin] = useState(true);
 
@@ -38,7 +38,7 @@ const Login = () => {
       );
       console.log(response);
       dispatch(addUser(response.data.user));
-      navigate("/userdashboard");
+      navigate("/profile");
     } catch (error) {
       console.error(error);
     }

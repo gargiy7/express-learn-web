@@ -11,7 +11,7 @@ const Navbar = () => {
   const handleLogout = async () => {
     try {
       const response = await axios.post(
-         import.meta.env.VITE_BACKEND_API_URL+"/users/logout",
+        import.meta.env.VITE_BACKEND_API_URL + "/users/logout",
         {},
         {
           withCredentials: true,
@@ -70,9 +70,9 @@ const Navbar = () => {
                 >
                   <div className="card-body">
                     <span className="text-lg font-bold">
-                      {user ? user?.products.length : 106}
+                      Products {user ? user?.products.length : 106}
                     </span>
-                    <span className="text-info">Subtotal: $999</span>
+                    {/* <span className="text-info">Subtotal: $999</span> */}
                     <div className="card-actions">
                       <button className="btn btn-primary btn-block">
                         View cart
@@ -106,7 +106,7 @@ const Navbar = () => {
                     </Link>
                   </li>
                   <li>
-                    <Link to="/productcards">productsCards</Link>
+                    <Link to="/productcards">Products Details</Link>
                   </li>
                   <li>
                     <a onClick={handleLogout}>Logout</a>
